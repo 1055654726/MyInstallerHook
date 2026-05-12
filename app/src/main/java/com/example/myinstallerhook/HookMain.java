@@ -1,24 +1,24 @@
 package com.example.myinstallerhook;
 
 import android.app.Activity;
-import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import io.github.libxposed.api.LXposedHookLoadPackage;
+import io.github.libxposed.api.XC_MethodHook;
+import io.github.libxposed.api.XposedHelpers;
+import io.github.libxposed.api.callbacks.XC_LoadPackage;
 
 import java.util.Enumeration;
 import dalvik.system.DexFile;
 
-public class HookMain implements IXposedHookLoadPackage {
+public class HookMain implements LXposedHookLoadPackage {
 
     @Override
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
 
+        // 只针对 PackageInstaller
         if (!lpparam.packageName.equals("com.android.packageinstaller"))
             return;
 
-        XposedBridge.log("MyInstallerHook: PackageInstaller loaded");
+        XC_LoadPackage.log("MyInstallerHook: PackageInstaller loaded");
 
         try {
             DexFile dexFile = new DexFile(lpparam.appInfo.sourceDir);
@@ -32,19 +32,19 @@ public class HookMain implements IXposedHookLoadPackage {
                 }
 
                 if (Activity.class.isAssignableFrom(clazz)) {
-                    XposedBridge.log("MyInstallerHook: Hooking Activity: " + className);
+                    XC_LoadPackage.log("MyInstallerHook: Hooking Activity: " + className);
 
                     XposedHelpers.findAndHookMethod(clazz, "shouldShowChooser", new XC_MethodHook() {
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                             param.setResult(false); // 自动跳过选择器
-                            XposedBridge.log("MyInstallerHook: Chooser skipped in " + className);
+                            XC_LoadPackage.log("MyInstallerHook: Chooser skipped in " + className);
                         }
                     });
                 }
             }
         } catch (Throwable t) {
-            XposedBridge.log("MyInstallerHook: Hook failed - " + t.getMessage());
+            XC_LoadPackage.log("MyInstallerHook: Hook failed - " + t.getMessage());
         }
     }
 }
