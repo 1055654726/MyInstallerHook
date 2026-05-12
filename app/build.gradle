@@ -1,9 +1,9 @@
-}
+plugins {
     id 'com.android.application'
 }
 
 android {
-    namespace 'com.example.myinstallerhook'  // 不再用 AndroidManifest 中的 package
+    namespace 'com.example.myinstallerhook' // 你的包名
     compileSdk 36
 
     defaultConfig {
@@ -26,7 +26,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // 资源 AAR / APK 相关警告忽略
     buildFeatures {
         viewBinding true
     }
@@ -36,12 +35,12 @@ repositories {
     google()
     mavenCentral()
     flatDir {
-        dirs 'libs'  // 你的 api-101.0.1.aar 放这里
+        dirs 'libs' // 你的 api-101.0.1.aar 放在这里
     }
 }
 
 dependencies {
-    // Xposed / LSPosed AAR
+    // Xposed AAR
     implementation(name: 'api-101.0.1', ext: 'aar')
 
     // Android 基础库
