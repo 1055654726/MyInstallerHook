@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.example.myinstallerhook"   // ⚠️ 必须加
     compileSdk 34
 
     defaultConfig {
