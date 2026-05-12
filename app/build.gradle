@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -8,8 +8,7 @@ android {
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.example.myinstallerhook"
-        minSdk 26
+        minSdk 21
         targetSdk 36
         versionCode 1
         versionName "1.0"
@@ -17,23 +16,24 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    buildFeatures {
-        dataBinding false   // 禁用 DataBinding
-        viewBinding true
-    }
-
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "1.8"
+    }
+
+    // 禁用 DataBinding，避免 GitHub Actions 报错
+    buildFeatures {
+        dataBinding = false
+        viewBinding = false
     }
 }
 
@@ -41,12 +41,13 @@ repositories {
     google()
     mavenCentral()
     flatDir {
-        dirs 'libs'  // 放置 api-101.0.1.aar
+        dirs 'libs' // 如果一定要用 AAR，放在 libs 文件夹里
     }
 }
 
 dependencies {
-    implementation(name:'api-101.0.1', ext:'aar')  // 引入 AAR
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
+    // Xposed API
+    implementation(name: 'api-101.0.1', ext: 'aar')
 }
