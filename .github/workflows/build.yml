@@ -1,31 +1,32 @@
-plugins {
-    id 'com.android.application'
-}
+name: Build LSPosed Module
 
-android {
-    compileSdk 34
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
-    defaultConfig {
-        applicationId "com.example.myinstallerhook"
-        minSdk 26
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-    }
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    buildTypes {
-        release {
-            minifyEnabled false
-        }
-    }
-}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
+    - name: Make gradlew executable
+      run: chmod +x gradlew
 
-dependencies {
-    implementation(name:'api-101.0.1', ext:'aar')
-}
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 17
+
+    - name: Build module APK
+      run: ./gradlew assembleRelease
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: MyInstallerHook-apk
+        path: app/build/outputs/apk/release/*.apk
