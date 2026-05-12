@@ -1,26 +1,50 @@
-应用插件: 'com.android.application'plugin: 'com.android.application'
+}
+    id 'com.android.application'
+}
 
-安卓 {
-    命名空间 "com.example.myinstallerhook""com.example.myinstallerhook"
-    编译SDK 36  // ⚠️ 升级到3636  // ⚠️ 升级到36
+android {
+    namespace 'com.example.myinstallerhook'  // 不再用 AndroidManifest 中的 package
+    compileSdk 36
 
-    默认配置 {
-        应用ID "com.example.myinstallerhook""com.example.myinstallerhook"
-        最小SDK 2626
-        目标SDK 3636
-        版本号 11
-        版本名称 "1.0""1.0"
+    defaultConfig {
+        applicationId "com.example.myinstallerhook"
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
     }
 
-    构建类型 {
-        发布 { 不压缩 false }false }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 资源 AAR / APK 相关警告忽略
+    buildFeatures {
+        viewBinding true
     }
 }
 
-仓库 { 平目录 { 目录 'libs' } }'libs' } }
+repositories {
+    google()
+    mavenCentral()
+    flatDir {
+        dirs 'libs'  // 你的 api-101.0.1.aar 放这里
+    }
+}
 
 dependencies {
-依赖项 { implementation(name:'api-101.0.1', ext:'aar') }'libs/api-101.0.1.aar') // 你已有的 AAR
-    // 添加 Xposed API
-    implementation 'de.robv.android.xposed:api:101' // 对应你需要的版本
+    // Xposed / LSPosed AAR
+    implementation(name: 'api-101.0.1', ext: 'aar')
+
+    // Android 基础库
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
 }
