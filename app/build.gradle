@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.android' version '1.9.10'
 }
 
 android {
@@ -30,7 +30,6 @@ android {
         jvmTarget = "1.8"
     }
 
-    // 禁用 DataBinding，避免 GitHub Actions 报错
     buildFeatures {
         dataBinding = false
         viewBinding = false
@@ -41,13 +40,11 @@ repositories {
     google()
     mavenCentral()
     flatDir {
-        dirs 'libs' // 如果一定要用 AAR，放在 libs 文件夹里
+        dirs 'libs'
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-
-    // Xposed API
     implementation(name: 'api-101.0.1', ext: 'aar')
 }
