@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.application' version '8.2.1'
 }
 
 android {
@@ -17,12 +17,6 @@ android {
         release {
             minifyEnabled false
         }
-    }
-}
-
-repositories {
-    flatDir {
-        dirs 'libs'
     }
 }
 
