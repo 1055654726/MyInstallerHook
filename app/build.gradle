@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
 }
 
 android {
@@ -17,20 +18,22 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug {
-            minifyEnabled false
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildFeatures {
-        dataBinding false
+        dataBinding false   // 禁用 DataBinding
         viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
@@ -38,12 +41,12 @@ repositories {
     google()
     mavenCentral()
     flatDir {
-        dirs 'libs'
+        dirs 'libs'  // 放置 api-101.0.1.aar
     }
 }
 
 dependencies {
-    implementation(name: 'api-101.0.1', ext: 'aar')
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation(name:'api-101.0.1', ext:'aar')  // 引入 AAR
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 }
