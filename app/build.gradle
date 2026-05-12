@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.myinstallerhook' // 你的包名
+    namespace 'com.example.myinstallerhook'
     compileSdk 36
 
     defaultConfig {
@@ -19,6 +19,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+        }
     }
 
     compileOptions {
@@ -28,6 +31,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        dataBinding false
     }
 }
 
@@ -35,15 +39,15 @@ repositories {
     google()
     mavenCentral()
     flatDir {
-        dirs 'libs' // 你的 api-101.0.1.aar 放在这里
+        dirs 'libs'
     }
 }
 
 dependencies {
-    // Xposed AAR
+    // Xposed API AAR
     implementation(name: 'api-101.0.1', ext: 'aar')
 
-    // Android 基础库
+    // AndroidX 基础库
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-ktx:1.10.1'
 }
