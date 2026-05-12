@@ -1,6 +1,6 @@
-plugins {
-    id 'com.android.library'
 }
+    id 'com.android.library'
+插件 {
 
 android {
     compileSdk 34
@@ -19,6 +19,13 @@ android {
     }
 }
 
+// ← 这里新增
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
-    implementation files('../libs/xposed-api-101.jar')
+    implementation(name:'api-101.0.1', ext:'aar')  // ← 指向你的 .aar 文件
 }
