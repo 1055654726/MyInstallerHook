@@ -17,7 +17,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
@@ -30,8 +29,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
         dataBinding false
+        viewBinding true
     }
 }
 
@@ -44,10 +43,7 @@ repositories {
 }
 
 dependencies {
-    // Xposed API AAR
     implementation(name: 'api-101.0.1', ext: 'aar')
-
-    // AndroidX 基础库
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.core:core-ktx:1.10.1'
 }
