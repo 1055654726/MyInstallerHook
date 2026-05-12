@@ -1,28 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.example.myinstallerhook"   // ⚠️ 必须加
-    compileSdk 34
+    namespace "com.example.myinstallerhook"
+    compileSdk 36  // ⚠️ 升级到36
 
     defaultConfig {
         applicationId "com.example.myinstallerhook"
         minSdk 26
-        targetSdk 34
+        targetSdk 36
         versionCode 1
         versionName "1.0"
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
-        }
+        release { minifyEnabled false }
     }
 }
 
-repositories {
-    flatDir { dirs 'libs' }
-}
+repositories { flatDir { dirs 'libs' } }
 
-dependencies {
-    implementation(name:'api-101.0.1', ext:'aar')
-}
+dependencies { implementation(name:'api-101.0.1', ext:'aar') }
