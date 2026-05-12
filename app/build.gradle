@@ -49,6 +49,6 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    // Xposed API
+    // Xposed API AAR
     implementation(name: 'api-101.0.1', ext: 'aar')
 }
