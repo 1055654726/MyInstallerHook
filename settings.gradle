@@ -1,0 +1,2 @@
+rootProject.name = 'MyInstallerHook'
+include ':app'
