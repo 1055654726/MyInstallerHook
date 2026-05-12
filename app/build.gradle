@@ -1,11 +1,12 @@
+plugins {
+    id 'com.android.application'
 }
-    id 'com.android.library'
-插件 {
 
 android {
     compileSdk 34
 
     defaultConfig {
+        applicationId "com.example.myinstallerhook"
         minSdk 26
         targetSdk 34
         versionCode 1
@@ -19,7 +20,6 @@ android {
     }
 }
 
-// ← 这里新增
 repositories {
     flatDir {
         dirs 'libs'
@@ -27,5 +27,5 @@ repositories {
 }
 
 dependencies {
-    implementation(name:'api-101.0.1', ext:'aar')  // ← 指向你的 .aar 文件
+    implementation(name:'api-101.0.1', ext:'aar')
 }
